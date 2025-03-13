@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="./static/images/icon.png">
+  <meta name="description"
+        content="Taming Diffusion for in-the-wild Video Amodal Completion">
+  <meta name="keywords" content="TACO, Video Amodal Completion, Video Diffusion">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TACO: Taming Diffusion for in-the-wild Video Amodal Completion</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <div style="display: flex; align-items: up;">
+            <img src="/static/images/ICON.png" alt="TACO Icon" style="width: 50px; height: 50px; margin-right: -40px;">
+            <div>
+              <h1 class="title is-2 publication-title" style="margin: 0;">TACO: Taming Diffusion for in-the-wild Video Amodal Completion</h1>
+            </div>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jason-aplp.github.io/Ruijie-Lu/">Ruijie Lu</a><sup>1,2*</sup>,</span>
+            <span class="author-block">
+              <a href="https://yixchen.github.io/">Yixin Chen</a><sup>2&dagger;</sup>,</span>
+            <span class="author-block">
+              <a href="https://yuliu-ly.github.io/">Yu Liu</a><sup>2,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://me.kiui.moe/">Jiaxiang Tang</a><sup>1</sup>,
+            </span>
+            <br>
+            <span class="author-block">
+              <a href="https://dali-jack.github.io/Junfeng-Ni/">Junfeng Ni</a><sup>2,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/dnvtmf">Diwen Wan</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.cis.pku.edu.cn/info/1177/1378.htm">Gang Zeng</a><sup>1&dagger;</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://siyuanhuang.com/">Siyuan Huang</a><sup>2&dagger;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block" style="color:#808080;font-weight:normal;">
+              <sup>*</sup> Work done during an internship at BIGAI  &nbsp&nbsp 
+              <sup>&dagger;</sup> Corresponding Author
+            </span>
+            <br>
+            <span class="author-block" style="color:#808080;font-weight:normal;">
+              <sup>1</sup>State Key Laboratory of General Artificial Intelligence, Peking University &nbsp &nbsp
+              <br>
+              <sup>2</sup>State Key Laboratory of General Artificial Intelligence, BIGAI  &nbsp&nbsp
+              <sup>3</sup>Tsinghua University
+            </span>
+            <br>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2412.11457"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Jason-aplp/MOVIS-code"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/JasonAplp/MOVIS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png" alt="TACO Teaser" width="100%">
+      <h2 class="subtitle has-text-centered" style="font-family: 'Google Sans', sans-serif; line-height: 1.6; color: #4a4a4a; font-size: 1.25rem; margin: 1.5rem 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <strong style="color: #363636;">TACO</strong> can synthesize consistent amodal content for occluded objects in in-the-wild videos.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0rem;">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          Humans can infer complete shapes and appearances of objects from limited visual cues, relying on extensive prior knowledge of the physical world. 
+          However, completing partially observable objects while ensuring consistency across video frames remains challenging for existing models, especially for unstructured, in-the-wild videos.
+          This paper tackles the task of Video Amodal Completion (VAC), which aims to generate the complete object consistently throughout the video given a visual prompt specifying the object of interest. 
+          Leveraging the rich, consistent manifolds learned by pre-trained video diffusion models, we propose a conditional diffusion model, <strong style="color: #363636;">TACO</strong>, that repurposes these manifolds for VAC. 
+          To enable its effective and robust generalization to challenging in-the-wild scenarios, we curate a large-scale synthetic dataset with multiple difficulty levels by systematically imposing occlusions onto un-occluded videos. 
+          Building on this, we devise a progressive fine-tuning paradigm that starts with simpler recovery tasks and gradually advances to more complex ones. 
+          We demonstrate <strong style="color: #363636;">TACO</strong>'s versatility on a wide range of in-the-wild videos from Internet, as well as on diverse, unseen datasets commonly used in autonomous driving, robotic manipulation, and scene understanding. 
+          Moreover, we show that <strong style="color: #363636;">TACO</strong> can be effectively applied to various downstream tasks like object reconstruction and pose estimation, highlighting its potential to facilitate physical world understanding and reasoning.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+<section class="section" style="padding-top: 0rem;">
+  <div class="container is-max-desktop">
+    <!-- Data. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Data Curation</h2>
+        <div class="content has-text-justified">
+          We curate the Object-video-Overlay (OvO) dataset following three steps:
+          <br>
+          1) Segment out candidates using provided annotations or off-the-shelf segmentation models.
+          <br>
+          2) Check the completeness of candidates with heuristic rules and manual filtering.
+          <br>
+          3) Progressively overlay consistent occluders for getting occluded-unoccluded training pairs.
+          <br>
+          <img src="./static/images/data_pipeline.png" alt="TACO Method" width="100%">
+        </div>
+      </div>
+    </div>
+    <!--/ Data. -->
+</section>
+
+<section class="section" style="padding-top: 0rem;">
+  <div class="container is-max-desktop">
+    <!-- Data. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          We repurpose stable video diffusion (SVD) for Video Amodal Completion (VAC) by <strong style="color: #363636;">progressively</strong> fine-tuning on the Object-video-Overlay (OvO) dataset
+          (First on OvO-Easy and then OvO-Hard) and incorporating the occluded object's visible masks as visual prompt to specify the object of interest. 
+        </br>
+          <img src="./static/images/method.png" alt="TACO Method" width="100%">
+        </div>
+      </div>
+    </div>
+    <!--/ Data. -->
+</section>
+
+<section class="section" style="padding-top: 0rem;">
+  <div class="container is-max-desktop">
+    <!-- Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Comparisons on Kubric-Static and Kubric-Dynamic</h2>
+      <img src="./static/images/comparisons.png" alt="TACO Results" width="100%">
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on ScanNet++</h2>
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_0.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-mask">
+            <video poster="" id="mask" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/scannet/scan_5.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on BridgeData</h2>
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_0.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-mask">
+            <video poster="" id="mask" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/bridgedata/bridge_5.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on YouTube-VOS</h2>
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/vos/vos_0.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/vos/vos_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/vos/vos_2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/vos/vos_3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/vos/vos_4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on YCB-Video</h2>
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/ycb/ycb_0.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/ycb/ycb_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/ycb/ycb_2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/ycb/ycb_3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="80%">
+              <source src="/static/videos/ycb/ycb_4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on Bdd100k</h2>
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item item-steve">
+            <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_0.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-chair-tp">
+            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-shiba">
+            <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-fullbody">
+            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_5.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_6.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item item-blueshirt">
+            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+              <source src="/static/videos/bdd100k/drive_7.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Results on in-the-wild videos</h2>
+      <div class="container">
+        <div class="video-gallery" style="display: flex; justify-content: space-between; gap: 10px;">
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/wild/wild_0.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/wild/wild_1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/wild/wild_2.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/wild/wild_3.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+      </div>  
+    </div>
+    <div class="column is-full-width">
+      <h2 class="title is-4">Long Videos</h2>
+      <div class="container">
+        <div class="video-gallery" style="display: flex; justify-content: space-between; gap: 10px;">
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/long/long_panda.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-item3" style="flex: 1;">
+                <video autoplay controls muted loop playsinline style="width: 100%;">
+                    <source src="static/videos/long/long_shoe.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+      </div>  
+    </div>
+    <!--/ Results. -->
+</section>
+
+
+
+<section class="section" id="BibTeX", style="padding-top: 0rem;">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+  </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The website template is borrowed from the source code of <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
