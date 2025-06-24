@@ -106,13 +106,23 @@
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href=""
+                <a href="https://huggingface.co/datasets/JasonAplp/TACO_training_dataset"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="far fa-images"></i>
                   </span>
                   <span>Data</span>
                   </a>
+                   <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=a14ulvU4ncM"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
             </div>
 
           </div>
@@ -124,12 +134,18 @@
 
 <section class="hero teaser">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <img src="./static/images/teaser.png" alt="TACO Teaser" width="100%">
-      <h2 class="subtitle has-text-centered" style="font-family: 'Google Sans', sans-serif; line-height: 1.6; color: #4a4a4a; font-size: 1.25rem; margin: 1.5rem 0; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <strong style="color: #363636;">TACO</strong> can synthesize consistent amodal content for occluded objects in in-the-wild videos.
-      </h2>
-    </div>
+    <h2 class="subtitle has-text-centered" style="font-family: 'Google Sans', sans-serif; line-height: 1.6; color: #4a4a4a; font-size: 1.2rem; margin: 1.5rem 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+      <strong style="color: #363636;">TACO</strong> can synthesize consistent amodal content for occluded objects in in-the-wild videos.
+      <br>
+      Please visit <a href="https://www.youtube.com/watch?v=a14ulvU4ncM">here</a> for the origin high-quality video.
+    </h2>
+    <br>
+      <div class="columns is-centered">
+        <video id="teaser" autoplay muted loop height="100%" controls>
+          <source src="./static/output.mp4" type="video/mp4">
+        </video>
+      </div>
+      <br>
   </div>
 </section>
 
